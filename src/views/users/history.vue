@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="filter-container">
 
-      <el-input v-model="listQuery.title" placeholder="专利名称" style="width: 200px;margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.title" placeholder="操作名称" style="width: 200px;margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
       <!--      <el-select v-model="listQuery.importance" placeholder="报告类型" clearable style="width: 120px;margin-right: 10px" class="filter-item">-->
       <!--        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />-->
       <!--      </el-select>-->
@@ -29,12 +29,12 @@
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="专利名称" min-width="150px">
+      <el-table-column label="操作名称" min-width="150px">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
+          <span class="link-type" @click="handleUpdate(row)">{{ '生成报告：' + row.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="浏览时间" sortable="custom" width="120px" align="center">
+      <el-table-column label="操作时间" sortable="custom" width="170px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.timestamp | parseTime('{y}-{m}-{d} {h}:{m}') }}</span>
         </template>

@@ -29,26 +29,32 @@
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="专利名称" min-width="150px">
+      <el-table-column label="报告名称" min-width="150px">
         <template slot-scope="{row}">
           <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="报告生成时间" sortable="custom" width="120px" align="center">
+      <el-table-column label="报告申请时间" sortable="custom" width="120px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.timestamp | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="报告类型" width="110px" align="center">
+      <el-table-column label="申请人" width="110px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.author.length>4?'查新报告':'侵权报告' }}</span>
+          <span>{{ row.author }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" width="130" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button v-if="row.status!='deleted'" size="mini" type="primary" @click="handleDelete(row,$index)">
+            上传
+          </el-button>
+          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
+            驳回
+          </el-button>
+          <el-button v-if="row.status!='deleted'" size="mini" type="warning" @click="handleDelete(row,$index)">
             导出
           </el-button>
         </template>

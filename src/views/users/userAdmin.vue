@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="filter-container">
 
-      <el-input v-model="listQuery.title" placeholder="专利名称" style="width: 200px;margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.title" placeholder="用户名称" style="width: 200px;margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
       <!--      <el-select v-model="listQuery.importance" placeholder="报告类型" clearable style="width: 120px;margin-right: 10px" class="filter-item">-->
       <!--        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />-->
       <!--      </el-select>-->
@@ -29,25 +29,28 @@
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="专利名称" min-width="150px">
+      <el-table-column label="用户名" min-width="150px">
         <template slot-scope="{row}">
           <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="估价时间" sortable="custom" width="120px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.timestamp | parseTime('{y}-{m}-{d} {h}:{m}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="估价金额" sortable="custom" width="150px" align="center">
+      <el-table-column label="用户密码" sortable="custom" width="150px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.author.length*100200 }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="130" class-name="small-padding fixed-width">
+      <el-table-column label="用户最近登录时间" sortable="custom" width="170px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.timestamp | parseTime('{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button v-if="row.status!='deleted'" size="mini" type="primary" @click="handleDelete(row,$index)">
-            重新估价
+            编辑
+          </el-button>
+          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
+            注销
           </el-button>
         </template>
       </el-table-column>

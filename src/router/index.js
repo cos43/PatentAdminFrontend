@@ -7,10 +7,6 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -84,116 +80,46 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/search',
+    path: '/doc',
     component: Layout,
+    meta: { title: '报告管理', icon: 'resource' },
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/users/index'),
-        name: 'SearchIndex',
-        meta: { title: '专利检索', icon: 'search' }
+        path: 'infringement',
+        component: () => import('@/views/users/docAdmin/infringement'),
+        name: 'Infringement',
+        meta: { title: '侵权报告', icon: 'report' }
       },
       {
-        path: 'form',
-        component: () => import('@/views/users/search/formSearch'),
-        name: 'FormSearch',
-        hidden: true,
-        meta: { title: '表单检索', icon: 'search' }
-      },
-      {
-        path: 'advanced',
-        component: () => import('@/views/users/search/advancedSearch'),
-        name: 'AdvancedSearch',
-        hidden: true,
-        meta: { title: '高级检索', icon: 'search' }
-      },
-      {
-        path: 'results',
-        component: () => import('@/views/users/search/results'),
-        name: 'SearchResults',
-        hidden: true,
-        meta: { title: '检索结果' }
+        path: 'valuation',
+        component: () => import('@/views/users/docAdmin/valuation'),
+        name: 'Valuation',
+        meta: { title: '估值报告', icon: 'report' }
       }
     ]
   },
   {
-    path: '/resource',
-    component: Layout,
-    meta: { title: '我的资源', icon: 'resource' },
-    children: [
-      {
-        path: 'patent',
-        component: () => import('@/views/users/resource/patent'),
-        name: 'Patent',
-        meta: { title: '我的专利', icon: 'patent' }
-      },
-      {
-        path: 'follow',
-        component: () => import('@/views/users/resource/follow'),
-        name: 'Follow',
-        meta: { title: '我的关注', icon: 'focus' }
-      },
-      {
-        path: 'report',
-        component: () => import('@/views/users/resource/report'),
-        name: 'Report',
-        meta: { title: '我的报告', icon: 'report' }
-      }
-    ]
-  },
-  {
-    path: '/technology',
-    component: Layout,
-    meta: { title: '我的技术', icon: 'guide' },
-    children: [
-      {
-        path: 'pack',
-        component: () => import('@/views/users/tech/techPack'),
-        name: 'Pack',
-        meta: { title: '技术包', icon: 'pack' }
-      },
-      {
-        path: 'noveltyReport',
-        component: () => import('@/views/users/tech/noveltyReport'),
-        name: 'noveltyReport',
-        meta: { title: '查新报告', icon: 'check' }
-      },
-      {
-        path: 'associationGraph',
-        component: () => import('@/views/users/tech/associationGraph'),
-        name: 'associationGraph',
-        meta: { title: '关联图谱', icon: 'related' }
-      },
-      {
-        path: 'technicalGraph',
-        component: () => import('@/views/users/tech/technicalGraph'),
-        name: 'technicalGraph',
-        meta: { title: '技术图谱', icon: 'tech' }
-      }
-    ]
-  },
-  {
-    path: '/trade',
-    component: Layout,
-    children: [
-      {
-        path: 'information',
-        component: () => import('@/views/users/tradingInformation'),
-        name: 'tradingInformation',
-        meta: { title: '交易信息', icon: 'trade' }
-      }
-    ]
-  },
-  {
-    path: '/patentValuation',
+    path: '/userAdmin',
     component: Layout,
     redirect: '/profile/index',
     children: [
       {
+        path: 'userAdmin',
+        component: () => import('@/views/users/userAdmin'),
+        name: 'UserAdmin',
+        meta: { title: '用户管理', icon: 'user' }
+      }
+    ]
+  },
+  {
+    path: '/history',
+    component: Layout,
+    children: [
+      {
         path: 'index',
-        component: () => import('@/views/users/patentValuation'),
-        name: 'patentValuation',
-        meta: { title: '专利估价', icon: 'estimate' }
+        component: () => import('@/views/users/history'),
+        name: 'History',
+        meta: { title: '操作历史', icon: 'edit' }
       }
     ]
   },
@@ -206,18 +132,6 @@ export const constantRoutes = [
         component: () => import('@/views/users/profile/index'),
         name: 'Profile',
         meta: { title: '个人资料', icon: 'profile' }
-      }
-    ]
-  },
-  {
-    path: '/history',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/users/history'),
-        name: 'History',
-        meta: { title: '浏览历史', icon: 'history' }
       }
     ]
   }
