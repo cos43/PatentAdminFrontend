@@ -3,23 +3,32 @@
     <div class="header">
       <div class="searchBox">
         <div class="searchHeader">
+          <h1 style="color: black;text-shadow: 3px 3px 3px #ccc;">专利咨询平台</h1>
           <div class="searchBoxInput">
-            <input placeholder="可输入申请人、发明(设计）人、技术关键词、分类号、申请号、公开(公告)号等或直接输入检索式">
-            <div class="searchBtn">检索</div>
+            <input
+              v-model="query"
+              placeholder="可输入申请人、发明(设计）人、技术关键词、分类号、申请号、公开(公告)号等或直接输入检索式"
+            >
+            <div class="searchBtn" @click="search">检索</div>
           </div>
-          <div class="searchAction">
-            <router-link to="/search/advanced"><span>高级检索</span></router-link>
-            <router-link to="/search/form"><span>表单检索</span></router-link>
+          <div style="display: flex;flex-direction: row;justify-content: flex-start;width: 80%">
+            <div class="searchAction">
+              <router-link to="/search/advanced"><span>高级检索</span></router-link>
+              <router-link to="/search/form"><span>表格检索</span></router-link>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="recommend">
-      <span class="result-item title">今日推荐</span>
+    <div class="recommend" style="margin: 30px 100px">
+      <div class="d-flex flex-row align-items-center">
+        <span class="title title-active">推荐</span>
+        <span class="title">知产教室</span>
+      </div>
       <div v-for="index in 8" :key="index" class="result-item">
         <div class="result-title row-center">
           <span class="text-primary">基于条件标准化流模型的强鲁棒性图像隐写方法及系统[ZH]</span>
-          <el-tag style="margin: 0 5px" effect="dark" size="mini" type="warning">审中</el-tag>
+          <el-tag effect="dark" size="mini" style="margin: 0 5px" type="warning">审中</el-tag>
           中国发明申请
         </div>
         <div class="desc">
@@ -40,19 +49,24 @@ export default {
   name: 'Users',
   data() {
     return {
-
+      query: ''
     }
   },
   created() {
 
   },
   methods: {
-
+    search() {
+      const query = this.query
+      if (query) {
+        this.$router.push({ path: '/search/results', query: { q: query }})
+      }
+    }
   }
 }
 </script>
-<style>
-.header{
+<style scoped>
+.header {
   padding: 10px 20px;
   border-bottom: 1px solid #ebeef5;
   height: 300px;
@@ -60,18 +74,20 @@ export default {
   flex-direction: column;
 
   align-items: center;
-  background-image: linear-gradient(to top, #ace0f9 0%,#ffffff  100%);
+  background-image: linear-gradient(to top, #ace0f9 0%, #ffffff 100%);
 }
-.searchBox{
+
+.searchBox {
   width: 70%;
-  margin-top: 100px;
+  padding-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: white;
   background: transparent;
 }
-.searchBoxInput{
+
+.searchBoxInput {
   width: 80%;
   display: flex;
   flex-direction: row;
@@ -79,7 +95,8 @@ export default {
   justify-content: center;
   position: relative;
 }
-.searchBoxInput input{
+
+.searchBoxInput input {
   width: 100%;
   height: 50px;
   position: relative;
@@ -88,16 +105,18 @@ export default {
   padding-right: 180px;
   padding-left: 22px;
   font-size: 14px;
-  background-color: rgba(255,255,255,0.85);
-  color: rgba(0,0,0,0.65);
+  background-color: rgba(255, 255, 255, 0.85);
+  color: rgba(0, 0, 0, 0.65);
   outline: none;
   border: 0;
   line-height: 50px;
 }
-.searchBoxInput input:focus{
+
+.searchBoxInput input:focus {
   outline: none;
 }
-.searchBtn{
+
+.searchBtn {
   position: absolute;
   display: block;
   width: 108px;
@@ -112,29 +131,39 @@ export default {
   cursor: pointer;
   transition: 0.2s;
 }
-.searchBtn:hover{
+
+.searchBtn:hover {
   opacity: 0.7;
 }
-.searchHeader{
+
+.searchHeader {
   width: 100%;
   display: flex;
-  flex-direction: row;
-}
-.searchAction{
-  display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.searchAction {
+  display: flex;
+  flex-direction: row;
   color: #17233d;
   font-weight: bold;
   font-size: 13px;
-  text-shadow:3px 3px 3px #ccc;
+  text-shadow: 3px 3px 3px #ccc;
   justify-content: space-around;
-  margin-left: 10px;
+  margin-top: 7px;
   cursor: pointer;
 
 }
-.recommend{
+
+.searchAction span {
+  margin-right: 10px;
+}
+
+.recommend {
   margin: 20px 10px 0 10px;
 }
+
 .result-title {
   font-size: 0.9rem;
 }
@@ -142,34 +171,55 @@ export default {
 .text-primary {
   color: #00a9ed;
 }
-.desc{
+
+.desc {
   font-size: 0.75rem;
   margin: 5px 0;
   line-height: 1.3rem;
 }
-.result-item{
-  margin-top: 10px;
-  padding: 20px 10px;
+
+.result-item {
+  margin: 15px 0;
   cursor: pointer;
+  padding: 20px;
+  transition: 0.3s;
   border-radius: 10px;
-  margin-bottom: 10px;
-  transition:0.3s;
 }
-.flex-end{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}
-.result-item:hover{
+
+.result-item:hover {
   background-color: #e3f8fd;
 }
-.active{
-  background-color: #e3f8fd;
-}
-.recommend .title{
+
+.title {
   font-size: 1.2rem;
   font-weight: bold;
   color: #17233d;
-  text-shadow: 3px 3px 3px #ccc;
+  margin-right: 20px;
 }
+
+.title:first-child {
+  margin-left: 20px;
+}
+
+.title:hover {
+  cursor: pointer;
+  color: #06CC6B;
+  transition: 0.3s;
+}
+
+.title-active:hover {
+  color: inherit;
+  transition: 0.3s;
+}
+
+.title-active {
+  text-decoration: none;
+  border-bottom: 10px solid #06CC6B;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  line-height: 10px;
+  display: inline-block;
+  margin-bottom: -10px !important;
+}
+
 </style>

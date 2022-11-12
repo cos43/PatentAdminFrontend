@@ -6,38 +6,35 @@
 
     <div class="user-profile">
       <div class="box-center">
-        <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
-          <div>Hello</div>
-          {{ user.role }}
-        </pan-thumb>
+        <pan-thumb :height="'100px'" :hoverable="false" :image="user.avatar||''" :width="'100px'" />
       </div>
       <div class="box-center">
-        <div class="user-name text-center">{{ user.name }}</div>
-        <div class="user-role text-center text-muted">{{ user.role | uppercaseFirst }}</div>
+        <div class="user-name text-center">{{ user.username }}</div>
       </div>
     </div>
 
     <div class="user-bio">
       <div class="user-education user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>个人简介</span></div>
+        <div class="user-bio-section-header">
+          <svg-icon icon-class="education" />
+          <span>个人简介</span></div>
         <div class="user-bio-section-body">
           <div class="text-muted">
-            JS in Computer Science from the University of Technology
+            {{ user.bio || '暂无简介' }}
           </div>
         </div>
       </div>
 
       <div class="user-skills user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>科研兴趣</span></div>
+        <div class="user-bio-section-header">
+          <svg-icon icon-class="skill" />
+          <span>科研兴趣</span></div>
         <div class="user-bio-section-body">
-          <div class="progress-item">
-            <span>机器学习 /</span>
-            <span>JavaScript /</span>
-            <span>Css /</span>
-            <span>ESLint</span>
-            <br><br>
-            <el-button type="primary" size="mini">编辑</el-button>
+          <div class="text-muted">
+            {{ user.interest || '机器学习/网络安全' }}
           </div>
+          <br>
+          <el-button size="mini" type="primary">编辑</el-button>
         </div>
       </div>
     </div>
@@ -51,15 +48,7 @@ export default {
   components: { PanThumb },
   props: {
     user: {
-      type: Object,
-      default: () => {
-        return {
-          name: '',
-          email: '',
-          avatar: '',
-          role: ''
-        }
-      }
+      type: Object
     }
   }
 }

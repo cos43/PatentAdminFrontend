@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-Vue.use(Router)
-
 /* Layout */
 import Layout from '@/layout'
 
+Vue.use(Router)
+
 /* Router Modules */
+// import componentsRouter from './modules/components'
+// import chartsRouter from './modules/charts'
+// import tableRouter from './modules/table'
+// import nestedRouter from './modules/nested'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -34,115 +37,166 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [
-  {
-    path: '/redirect',
-    component: Layout,
+export const constantRoutes = [{
+  path: '/redirect', component: Layout, hidden: true, children: [{
+    path: '/redirect/:path(.*)', component: () => import('@/views/redirect/index')
+  }]
+}, {
+  path: '/register', component: () => import('@/views/users/components/RegisterComponent'), hidden: true
+}, {
+  path: '/auth-redirect', component: () => import('@/views/login/auth-redirect'), hidden: true
+}, {
+  path: '/404', component: () => import('@/views/error-page/404'), hidden: true
+}, {
+  path: '/401', component: () => import('@/views/error-page/401'), hidden: true
+}, {
+  path: '/', component: Layout, redirect: '/dashboard', children: [{
+    path: 'dashboard',
+    component: () => import('@/views/users/dashboard/index'),
+    name: 'Dashboard',
+    meta: { title: '首页', icon: 'dashboard', affix: true }
+  }]
+}, {
+  path: '/login', component: () => import('@/views/users/login')
+}, {
+  path: '/search', component: Layout, children: [{
+    path: 'index',
+    component: () => import('@/views/users/index'),
+    name: 'SearchIndex',
+    meta: { title: '专利检索', icon: 'search' }
+  }, {
+    path: 'form',
+    component: () => import('@/views/users/search/formSearch'),
+    name: 'FormSearch',
     hidden: true,
-    children: [
-      {
-        path: '/redirect/:path(.*)',
-        component: () => import('@/views/redirect/index')
-      }
-    ]
-  },
-  {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
-  {
-    path: '/auth-redirect',
-    component: () => import('@/views/login/auth-redirect'),
-    hidden: true
-  },
-  {
-    path: '/404',
-    component: () => import('@/views/error-page/404'),
-    hidden: true
-  },
-  {
-    path: '/401',
-    component: () => import('@/views/error-page/401'),
-    hidden: true
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: '首页', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/doc',
-    component: Layout,
-    meta: { title: '报告管理', icon: 'resource' },
-    children: [
-      {
-        path: 'infringement',
-        component: () => import('@/views/users/docAdmin/infringement'),
-        name: 'Infringement',
-        meta: { title: '侵权报告', icon: 'report' }
-      },
-      {
-        path: 'valuation',
-        component: () => import('@/views/users/docAdmin/valuation'),
-        name: 'Valuation',
-        meta: { title: '估值报告', icon: 'report' }
-      }
-    ]
-  },
-  {
-    path: '/userAdmin',
-    component: Layout,
-    redirect: '/profile/index',
-    children: [
-      {
-        path: 'userAdmin',
-        component: () => import('@/views/users/userAdmin'),
-        name: 'UserAdmin',
-        meta: { title: '用户管理', icon: 'user' }
-      }
-    ]
-  },
-  {
-    path: '/history',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/users/history'),
-        name: 'History',
-        meta: { title: '操作历史', icon: 'edit' }
-      }
-    ]
-  },
-  {
-    path: '/profile',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/users/profile/index'),
-        name: 'Profile',
-        meta: { title: '个人资料', icon: 'profile' }
-      }
-    ]
-  }
-]
+    meta: { title: '表格检索', icon: 'search' }
+  }, {
+    path: 'advanced',
+    component: () => import('@/views/users/search/advancedSearch'),
+    name: 'AdvancedSearch',
+    hidden: true,
+    meta: { title: '高级检索', icon: 'search' }
+  }, {
+    path: 'results',
+    component: () => import('@/views/users/search/results'),
+    name: 'SearchResults',
+    hidden: true,
+    meta: { title: '检索结果' }
+  }, {
+    path: 'detail',
+    component: () => import('@/views/users/search/detail'),
+    name: 'SearchDetail',
+    hidden: true,
+    meta: { title: '检索详情' }
+  }]
+}, {
+  path: '/patent', component: Layout, meta: { title: '我的专利', icon: 'patent' }, children: [{
+    path: 'home',
+    component: () => import('@/views/users/patent/dashboard/index'),
+    name: 'Patent',
+    meta: { title: '首页', icon: 'patent' }
+  }, {
+    path: 'claim',
+    component: () => import('@/views/users/patent/patentClaimList'),
+    name: 'Patent',
+    meta: { title: '专利管理', icon: 'patent' }
+  }, {
+    path: 'report',
+    component: () => import('@/views/users/patent/report'),
+    name: 'Report',
+    meta: { title: '我的报告', icon: 'report' }
+  }, {
+    path: 'package',
+    component: () => import('@/views/users/patent/package'),
+    name: 'Pack',
+    meta: { title: '工艺包', icon: 'pack' }
+  }, {
+    path: 'package/:id',
+    component: () => import('@/views/users/patent/packageDetail'),
+    name: 'Pack',
+    hidden: true,
+    meta: { title: '工艺包详情', icon: 'pack' }
+  }, {
+    path: 'analysis',
+    name: 'analysis',
+    meta: { title: '分析', icon: 'pack' },
+    component: () => import('@/views/users/patent/analysis/analysis'),
+    children: [{
+      path: 'associationGraph',
+      component: () => import('@/views/users/patent/analysis/associationGraph'),
+      name: 'associationGraph',
+      meta: { title: '关联图谱', icon: 'related' }
+    }, {
+      path: 'technicalGraph',
+      component: () => import('@/views/users/patent/analysis/technicalGraph'),
+      name: 'technicalGraph',
+      meta: { title: '技术图谱', icon: 'tech' }
+    }]
+  }]
+}, {
+  path: '/explore', component: Layout, meta: { title: '我的探索', icon: 'guide' }, children: [
+    {
+      path: 'follow',
+      component: () => import('@/views/users/explore/patentFollowList.vue'),
+      name: 'Follow',
+      meta: { title: '我的关注', icon: 'focus' }
+    }, {
+      path: 'analysis',
+      name: 'Pack',
+      meta: { title: '分析', icon: 'pack' },
+      component: () => import('@/views/users/explore/analysis/analysis'),
+      children: [{
+        path: 'associationGraph',
+        component: () => import('@/views/users/explore/analysis/associationGraph'),
+        name: 'associationGraph',
+        meta: { title: '关联图谱', icon: 'related' }
+      }, {
+        path: 'technicalGraph',
+        component: () => import('@/views/users/explore/analysis/technicalGraph'),
+        name: 'technicalGraph',
+        meta: { title: '技术图谱', icon: 'tech' }
+      }]
+    }]
+}, {
+  path: '/trade', component: Layout, meta: { title: '我的交易', icon: 'guide' }, children: [{
+    path: 'home',
+    component: () => import('@/views/users/trade/dashboard/index'),
+    name: 'tradingInformation',
+    meta: { title: '首页', icon: 'trade' }
+  }, {
+    path: 'information',
+    component: () => import('@/views/users/trade/tradingInformation'),
+    name: 'tradingInformation',
+    meta: { title: '交易信息', icon: 'trade' }
+  }, {
+    path: 'estimate',
+    component: () => import('@/views/users/trade/patentValuation'),
+    name: 'patentValuation',
+    meta: { title: '专利估价', icon: 'estimate' }
+  }]
+},
+
+{
+  path: '/profile', component: Layout, children: [{
+    path: 'index',
+    component: () => import('@/views/users/profile/index'),
+    name: 'Profile',
+    meta: { title: '个人资料', icon: 'profile' }
+  }]
+}, {
+  path: '/history', component: Layout, children: [{
+    path: 'index',
+    component: () => import('@/views/users/history'),
+    name: 'History',
+    meta: { title: '浏览历史', icon: 'history' }
+  }]
+}]
 
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-export const asyncRoutes = [
-  // {
+export const asyncRoutes = [// {
   //   path: '/permission',
   //   component: Layout,
   //   redirect: '/permission/page',
@@ -402,8 +456,7 @@ export const asyncRoutes = [
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  scrollBehavior: () => ({ y: 0 }), routes: constantRoutes
 })
 
 const router = createRouter()
