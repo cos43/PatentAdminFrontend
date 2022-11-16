@@ -54,48 +54,46 @@ export const constantRoutes = [{
     path: 'dashboard',
     component: () => import('@/views/users/dashboard/index'),
     name: 'Dashboard',
-    meta: { title: '首页', icon: 'dashboard', affix: true }
+    meta: { title: '首页', icon: 'el-icon-s-home', affix: true }
   }]
 }, {
   path: '/login', component: () => import('@/views/users/login')
-}, {
-  path: '/search', component: Layout, children: [{
-    path: 'index',
-    component: () => import('@/views/users/index'),
-    name: 'SearchIndex',
-    meta: { title: '专利检索', icon: 'search' }
-  }, {
-    path: 'form',
-    component: () => import('@/views/users/search/formSearch'),
-    name: 'FormSearch',
-    hidden: true,
-    meta: { title: '表格检索', icon: 'search' }
-  }, {
-    path: 'advanced',
-    component: () => import('@/views/users/search/advancedSearch'),
-    name: 'AdvancedSearch',
-    hidden: true,
-    meta: { title: '高级检索', icon: 'search' }
-  }, {
-    path: 'results',
-    component: () => import('@/views/users/search/results'),
-    name: 'SearchResults',
-    hidden: true,
-    meta: { title: '检索结果' }
-  }, {
-    path: 'detail',
-    component: () => import('@/views/users/search/detail'),
-    name: 'SearchDetail',
-    hidden: true,
-    meta: { title: '检索详情' }
-  }]
-}, {
-  path: '/patent', component: Layout, meta: { title: '我的专利', icon: 'patent' }, children: [{
-    path: 'home',
-    component: () => import('@/views/users/patent/dashboard/index'),
-    name: 'Patent',
-    meta: { title: '首页', icon: 'patent' }
-  }, {
+},
+
+// {
+//   path: '/search', component: Layout, children: [{
+//     path: 'index',
+//     component: () => import('@/views/users/index'),
+//     name: 'SearchIndex',
+//     meta: { title: '专利检索', icon: 'search' }
+//   }, {
+//     path: 'form',
+//     component: () => import('@/views/users/search/formSearch'),
+//     name: 'FormSearch',
+//     hidden: true,
+//     meta: { title: '表格检索', icon: 'search' }
+//   }, {
+//     path: 'advanced',
+//     component: () => import('@/views/users/search/advancedSearch'),
+//     name: 'AdvancedSearch',
+//     hidden: true,
+//     meta: { title: '高级检索', icon: 'search' }
+//   }, {
+//     path: 'results',
+//     component: () => import('@/views/users/search/results'),
+//     name: 'SearchResults',
+//     hidden: true,
+//     meta: { title: '检索结果' }
+//   }, {
+//     path: 'detail',
+//     component: () => import('@/views/users/search/detail'),
+//     name: 'SearchDetail',
+//     hidden: true,
+//     meta: { title: '检索详情' }
+//   }]
+// },
+{
+  path: '/patent', component: Layout, meta: { title: '专利管理', icon: 'patent' }, children: [{
     path: 'claim',
     component: () => import('@/views/users/patent/patentClaimList'),
     name: 'Patent',
@@ -104,7 +102,7 @@ export const constantRoutes = [{
     path: 'report',
     component: () => import('@/views/users/patent/report'),
     name: 'Report',
-    meta: { title: '我的报告', icon: 'report' }
+    meta: { title: '我的报告', icon: 'el-icon-document' }
   }, {
     path: 'package',
     component: () => import('@/views/users/patent/package'),
@@ -119,7 +117,7 @@ export const constantRoutes = [{
   }, {
     path: 'analysis',
     name: 'analysis',
-    meta: { title: '分析', icon: 'pack' },
+    meta: { title: '分析', icon: 'el-icon-pie-chart' },
     component: () => import('@/views/users/patent/analysis/analysis'),
     children: [{
       path: 'associationGraph',
@@ -133,8 +131,25 @@ export const constantRoutes = [{
       meta: { title: '技术图谱', icon: 'tech' }
     }]
   }]
-}, {
-  path: '/explore', component: Layout, meta: { title: '我的探索', icon: 'guide' }, children: [
+},
+
+{
+  path: '/report', component: Layout, meta: { title: '报告管理', icon: 'el-icon-folder' }, children: [{
+    path: 'infringementReport',
+    component: () => import('@/views/admin/reports/infringement'),
+    name: 'infringementReport',
+    meta: { title: '侵权报告', icon: 'el-icon-document' }
+  }, {
+    path: 'valuationReport',
+    name: 'valuationReport',
+    meta: { title: '估值报告', icon: 'el-icon-document' },
+    component: () => import('@/views/admin/reports/valuation')
+
+  }]
+},
+
+{
+  path: '/explore', component: Layout, meta: { title: '分析图谱', icon: 'guide' }, children: [
     {
       path: 'follow',
       component: () => import('@/views/users/explore/patentFollowList.vue'),
@@ -157,8 +172,10 @@ export const constantRoutes = [{
         meta: { title: '技术图谱', icon: 'tech' }
       }]
     }]
-}, {
-  path: '/trade', component: Layout, meta: { title: '我的交易', icon: 'guide' }, children: [{
+},
+
+{
+  path: '/trade', component: Layout, meta: { title: '交易管理', icon: 'el-icon-s-goods' }, children: [{
     path: 'home',
     component: () => import('@/views/users/trade/dashboard/index'),
     name: 'tradingInformation',
@@ -181,14 +198,14 @@ export const constantRoutes = [{
     path: 'index',
     component: () => import('@/views/users/profile/index'),
     name: 'Profile',
-    meta: { title: '个人资料', icon: 'profile' }
+    meta: { title: '用戶管理', icon: 'el-icon-user-solid' }
   }]
 }, {
   path: '/history', component: Layout, children: [{
     path: 'index',
     component: () => import('@/views/users/history'),
     name: 'History',
-    meta: { title: '浏览历史', icon: 'history' }
+    meta: { title: '操作历史', icon: 'history' }
   }]
 }]
 

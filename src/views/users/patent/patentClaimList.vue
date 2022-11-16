@@ -95,6 +95,15 @@ export default {
   data() {
     return {
       tableKey: 0,
+      patents: null,
+      ifpatent: false,
+      ifreport: false,
+      ifshow1: false,
+      patentitems: null,
+      patentlist: [],
+      isreject: false,
+      patentid: 0,
+      a: 0,
       list: null,
       listLoading: true,
       listQuery: {
