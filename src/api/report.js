@@ -41,3 +41,21 @@ export function getReportById(reportId) {
     url: `/admin-agent/report/${reportId} `, method: 'get'
   })
 }
+
+export function Upload(data) {
+  return request({
+    url: '/public/uploadFile?type=1', // type=1单文件，type=2多文件
+    method: 'post', data,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
+export function updateReport(data) {
+  return request({
+    url: `/admin-agent/report/upload`,
+    method: 'put',
+    data
+  })
+}

@@ -215,6 +215,12 @@ export default {
           this.listLoading = false
           return
         }
+        if (response.data.data == null) {
+          alert('您搜索的报告不存在')
+          this.ifquery = true
+          this.listLoading = false
+          return
+        }
         this.ifquery = true
         this.list = [{}]
         this.list[0] = response.data.data
