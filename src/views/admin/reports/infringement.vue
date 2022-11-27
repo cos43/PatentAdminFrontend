@@ -244,7 +244,12 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" label="操作" sortable="custom" width="220px" />
+        <el-table-column align="center" label="操作" sortable="custom" width="220px">
+          <template slot-scope="{row}">
+            <el-button size="mini" type="primary" @click="handleDeleteFile(row)">删除</el-button>
+            <el-button size="mini" type="warning" @click="handleDeleteFile(file.FilePath)">修改</el-button>
+          </template>
+        </el-table-column>
 
       </el-table>
 
@@ -267,7 +272,6 @@ export default {
     return {
       files: null,
       tableKey: 0,
-
       patents: null,
       ifquery: false,
       ifupload: false,
@@ -279,7 +283,6 @@ export default {
       patentid: 0,
       time1: '0:0:0',
       centerDialogVisible: false,
-
       a: 0,
       list: null,
       listLoading: true,
@@ -291,7 +294,6 @@ export default {
         type: undefined,
         sort: '+id'
       },
-
       queryid: ''
 
     }
