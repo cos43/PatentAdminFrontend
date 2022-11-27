@@ -46,7 +46,7 @@
         </el-button>
 
       </div>
-
+      <input v-show="false" ref="uploadInput" type="file">
       <el-table
         v-if="ifpatent == false && ifupload == false"
         :key="tableKey"
@@ -107,7 +107,6 @@
             </el-button>
             <el-button icon="el-icon-upload" size="mini" type="primary" @click="upload(row)">
               上传
-              <input v-show="false" ref="uploadInput" type="file">
             </el-button>
             <el-button
               v-if="row.rejectTag === '已上传'"
@@ -257,7 +256,15 @@
 <script>
 
 import waves from '@/directive/waves' // waves directive
-import { getInfringementReportList, getReportPatents, rejectReport, unRejectReport, getReportById, Upload, updateReport } from '@/api/report'
+import {
+  getInfringementReportList,
+  getReportPatents,
+  rejectReport,
+  unRejectReport,
+  getReportById,
+  Upload,
+  updateReport
+} from '@/api/report'
 
 export default {
   name: 'ComplexTable',
