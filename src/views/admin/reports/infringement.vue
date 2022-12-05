@@ -58,7 +58,7 @@
         fit
         highlight-current-row
         style="width: 100%;
-      border-radius: 10px!important; "
+      border-radius: 10px!important;  "
       >
 
         <el-table-column align="center" label="ID" prop="id" sortable="custom" width="60">
@@ -211,9 +211,13 @@
                 <div class="card-actions">
                   <div style="display: flex;flex-direction: row;align-items: center;justify-content: center">
                     <el-button-group>
-                      <el-button size="mini" type="primary" @click="preview(file)">预览
+
+                      <el-button size="mini" type="primary" icon="el-icon-download">
+                        <a @click="download(file.FilePath)">
+                          下载
+                        </a>
+
                       </el-button>
-                      <el-button size="mini" type="primary">下载</el-button>
                     </el-button-group>
                   </div>
                 </div>
@@ -236,7 +240,7 @@
                     <img :src="`http://localhost:8000${file.FilePath}`" alt="" class="image">
                   </div>
                   <span slot="footer" class="dialog-footer">
-                    <el-button icon="el-icon-download" @click="download()">下载</el-button>
+                    <el-button icon="el-icon-download" @click="download(file.FilePath)">下载</el-button>
                   </span>
                 </el-dialog>
               </el-card>
@@ -287,6 +291,7 @@ export default {
       ifpatent: false,
       ifreport: false,
       ifshow1: false,
+      url: '',
       patentitems: null,
       patentlist: [],
       patentid: 0,
@@ -522,6 +527,11 @@ export default {
       }
       // 在这里打印出来的files是旧的文件。
       // getFiles必须在上面的then里面
+    },
+    download(path) {
+      this.url = 'http://localhost:8000' + path
+      // 无法直接下载浏览器可直接预览的文件类型（txt、png、pdf会直接预览）
+      window.open(this.url, '_self')
     }
 
   }

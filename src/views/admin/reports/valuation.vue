@@ -211,9 +211,13 @@
                 <div class="card-actions">
                   <div style="display: flex;flex-direction: row;align-items: center;justify-content: center">
                     <el-button-group>
-                      <el-button size="mini" type="primary" @click="preview(file)">预览
+
+                      <el-button size="mini" type="primary" icon="el-icon-download">
+                        <a @click="download(file.FilePath)">
+                          下载
+                        </a>
+
                       </el-button>
-                      <el-button size="mini" type="primary">下载</el-button>
                     </el-button-group>
                   </div>
                 </div>
@@ -236,7 +240,7 @@
                     <img :src="`http://localhost:8000${file.FilePath}`" alt="" class="image">
                   </div>
                   <span slot="footer" class="dialog-footer">
-                    <el-button icon="el-icon-download" @click="download()">下载</el-button>
+                    <el-button icon="el-icon-download" @click="download(file.FilePath)">下载</el-button>
                   </span>
                 </el-dialog>
               </el-card>
@@ -500,6 +504,12 @@ export default {
       }
       // 在这里打印出来的files是旧的文件。
       // getFiles必须在上面的then里面
+    },
+    download(path) {
+      console.log(path)
+      this.url = 'http://localhost:8000' + path
+      console.log(this.url)
+      window.open(this.url, '_self')
     }
 
   }
