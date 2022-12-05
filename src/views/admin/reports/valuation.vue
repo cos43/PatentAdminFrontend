@@ -1,4 +1,5 @@
 <template>
+
   <div class="app-container" style="display: flex;flex-direction: row">
     <div style="width: 100% ;">
       <div class="filter-container">
@@ -46,9 +47,10 @@
         </el-button>
 
       </div>
+      <input v-show="false" ref="uploadInput" type="file">
 
       <el-table
-        v-if="ifpatent == false && ifupload == false"
+        v-if="ifpatent === false && ifupload === false"
         :key="tableKey"
         v-loading="listLoading"
         :data="list"
@@ -56,7 +58,7 @@
         fit
         highlight-current-row
         style="width: 100%;
-      border-radius: 10px!important;"
+      border-radius: 10px!important; "
       >
 
         <el-table-column align="center" label="ID" prop="id" sortable="custom" width="60">
@@ -107,7 +109,6 @@
             </el-button>
             <el-button icon="el-icon-upload" size="mini" type="primary" @click="upload(row)">
               上传
-              <input v-show="false" ref="uploadInput" type="file">
             </el-button>
             <el-button
               v-if="row.rejectTag === '已上传'"
@@ -165,7 +166,7 @@
 
         <el-table-column class-name="status-col" label="简介" width="300">
           <template slot-scope="{row}">
-            <span class="link-type">{{ row.patentProperties.CLS }}</span>
+            <span class="link-type">{{ row.patentProperties.CL }}</span>
           </template>
         </el-table-column>
 
@@ -235,7 +236,7 @@
                     <img :src="`http://localhost:8000${file.FilePath}`" alt="" class="image">
                   </div>
                   <span slot="footer" class="dialog-footer">
-                    <el-button icon="el-icon-download" @click="centerDialogVisible = false">下载</el-button>
+                    <el-button icon="el-icon-download" @click="download()">下载</el-button>
                   </span>
                 </el-dialog>
               </el-card>
@@ -246,8 +247,8 @@
 
         <el-table-column align="center" label="操作" sortable="custom" width="220px">
           <template slot-scope="{row}">
-            <el-button size="mini" type="primary" @click="handleDeleteFile(row)">删除</el-button>
-            <el-button size="mini" type="warning" @click="handleDeleteFile(file.FilePath)">修改</el-button>
+            <el-button size="mini" type="primary" @click="deleteReport(row.reportId)">删除</el-button>
+            <el-button size="mini" type="warning" @click="changeFiles(row)">修改</el-button>
           </template>
         </el-table-column>
 
@@ -258,11 +259,10 @@
   </div>
 
 </template>
-
 <script>
 // import { unClaimPatent } from '@/api/patent'
 import waves from '@/directive/waves' // waves directive
-import { getValuationReportList, getReportPatents, rejectReport, unRejectReport, getReportById, Upload, updateReport } from '@/api/report'
+import { getValuationReportList, getReportPatents, rejectReport, unRejectReport, getReportById, Upload, updateReport, deleteReport } from '@/api/report'
 
 export default {
   name: 'ComplexTable',
@@ -396,17 +396,11 @@ export default {
       return false
     },
     upload(row) {
-      // 1、未审核时，上传也出现两个row的情况
-      // 2、在驳回=>撤销驳回=>再上传的时候，会出现row有两个对象的情况
-
-      // row只有上传的时候不正常，其他驳回、撤销都正常
-      // 出问题时直接打印row，发现传过来的也是两个对象。
       if (row.rejectTag === '已驳回') {
         alert('该报告已被驳回，请先撤销驳回')
         return
       }
-      console.log('文件内容', row.files, '状态标签', row.rejectTag, '报告id', row.reportId)
-      if (row.files !== 'rejected clean' && row.files !== 'null' && row.files !== '') {
+      if (row.files !== '' && row.files !== '[]') {
         alert('您已上传侵权报告')
         return
       }
@@ -436,6 +430,76 @@ export default {
           })
         })
       }
+    },
+    deleteReport(a) {
+      alert('您确定取消上传的文件？')
+      deleteReport(a).then(response => {
+        if (response.data.code === 200) {
+          setTimeout(() => {
+            this.msg = this.$message({
+              duration: 1000,
+              type: 'success',
+              message: '成功删除文件'
+            })
+          }, 0)
+        } else {
+          setTimeout(() => {
+            this.msg = this.$message({
+              duration: 1000,
+              type: 'error',
+              message: '删除文件失败'
+            })
+          }, 0)
+        }
+        this.back()
+      })
+    },
+    changeFiles(row) {
+      alert('您确定不保留原文件？')
+      deleteReport(row.reportId).then(res => {
+        if (res.data.code !== 200) {
+          setTimeout(() => {
+            this.msg = this.$message({
+              duration: 1000,
+              type: 'error',
+              message: '修改文件失败'
+            })
+          }, 0)
+          return
+        }
+      })
+
+      this.$refs.uploadInput.click()
+      this.$refs.uploadInput.onchange = e => {
+        const formData = new FormData()
+        formData.append('file', e.target.files[0])
+        Upload(formData).then(res => {
+          const path = res.data.data.path
+          const id = row.reportId
+          updateReport({
+            reportId: id,
+            filesOpt: 'add',
+            files: [path]
+          }).then(res => {
+            this.getList()
+            setTimeout(() => {
+              this.msg = this.$message({
+                duration: 1000,
+                type: 'success',
+                message: '提交成功'
+              })
+            }, 0)
+            getReportById(row.reportId).then(response => {
+              this.files = response.data.data
+              this.files.files = JSON.parse(response.data.data.files)
+              this.files = [{}]
+              this.files[0] = response.data.data
+            })
+          })
+        })
+      }
+      // 在这里打印出来的files是旧的文件。
+      // getFiles必须在上面的then里面
     }
 
   }

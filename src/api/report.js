@@ -24,14 +24,14 @@ export function getInfringementReportList() {
 //
 export function rejectReport(reportId) {
   return request({
-    url: `/admin-agent/report/reject/${reportId} `, method: 'post'
+    url: `/admin-agent/report/reject/${reportId} `, method: 'put'
   })
 }
 
 //
 export function unRejectReport(reportId) {
   return request({
-    url: `/admin-agent/report/unReject/${reportId} `, method: 'post'
+    url: `/admin-agent/report/unReject/${reportId} `, method: 'put'
   })
 }
 
@@ -57,5 +57,19 @@ export function updateReport(data) {
     url: `/admin-agent/report/upload`,
     method: 'put',
     data
+  })
+}
+
+export function deleteReport(reportId) {
+  return request({
+    url: `/admin-agent/report/files/${reportId}`,
+    method: 'put'
+  })
+}
+
+export function getReportListByPaId(patentId) {
+  return request({
+    url: `/admin-agent/report/reportList/${patentId}`,
+    method: 'get'
   })
 }
