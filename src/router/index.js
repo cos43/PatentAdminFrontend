@@ -98,12 +98,14 @@ export const constantRoutes = [{
     component: () => import('@/views/users/patent/patentClaimList'),
     name: 'Patent',
     meta: { title: '专利管理', icon: 'patent' }
-  }, {
-    path: 'report',
-    component: () => import('@/views/users/patent/report'),
-    name: 'Report',
-    meta: { title: '我的报告', icon: 'el-icon-document' }
-  }, {
+  },
+  // {
+  //   path: 'report',
+  //   component: () => import('@/views/users/patent/report'),
+  //   name: 'Report',
+  //   meta: { title: '我的报告', icon: 'el-icon-document' }
+  // },
+  {
     path: 'package',
     component: () => import('@/views/users/patent/package'),
     name: 'Pack',
@@ -114,23 +116,25 @@ export const constantRoutes = [{
     name: 'Pack',
     hidden: true,
     meta: { title: '工艺包详情', icon: 'pack' }
-  }, {
-    path: 'analysis',
-    name: 'analysis',
-    meta: { title: '分析', icon: 'el-icon-pie-chart' },
-    component: () => import('@/views/users/patent/analysis/analysis'),
-    children: [{
-      path: 'associationGraph',
-      component: () => import('@/views/users/patent/analysis/associationGraph'),
-      name: 'associationGraph',
-      meta: { title: '关联图谱', icon: 'related' }
-    }, {
-      path: 'technicalGraph',
-      component: () => import('@/views/users/patent/analysis/technicalGraph'),
-      name: 'technicalGraph',
-      meta: { title: '技术图谱', icon: 'tech' }
-    }]
-  }]
+  }
+  //  {
+  //   path: 'analysis',
+  //   name: 'analysis',
+  //   meta: { title: '分析', icon: 'el-icon-pie-chart' },
+  //   component: () => import('@/views/users/patent/analysis/analysis'),
+  //   children: [{
+  //     path: 'associationGraph',
+  //     component: () => import('@/views/users/patent/analysis/associationGraph'),
+  //     name: 'associationGraph',
+  //     meta: { title: '关联图谱', icon: 'related' }
+  //   }, {
+  //     path: 'technicalGraph',
+  //     component: () => import('@/views/users/patent/analysis/technicalGraph'),
+  //     name: 'technicalGraph',
+  //     meta: { title: '技术图谱', icon: 'tech' }
+  //   }]
+  // }
+  ]
 },
 
 {
@@ -150,12 +154,13 @@ export const constantRoutes = [{
 
 {
   path: '/explore', component: Layout, meta: { title: '分析图谱', icon: 'guide' }, children: [
+    // {
+    //   path: 'follow',
+    //   component: () => import('@/views/users/explore/patentFollowList.vue'),
+    //   name: 'Follow',
+    //   meta: { title: '我的关注', icon: 'focus' }
+    // },
     {
-      path: 'follow',
-      component: () => import('@/views/users/explore/patentFollowList.vue'),
-      name: 'Follow',
-      meta: { title: '我的关注', icon: 'focus' }
-    }, {
       path: 'analysis',
       name: 'Pack',
       meta: { title: '分析', icon: 'pack' },
