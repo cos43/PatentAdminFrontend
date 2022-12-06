@@ -101,17 +101,18 @@
 
         <el-table-column align="center" class-name="small-padding fixed-width" label="操作" width="280">
           <template slot-scope="{row}">
-            <el-button v-if="isreject(row) === false" size="mini" type="danger" @click="Reject(row.reportId)">
+            <el-button v-if="isreject(row) === false" :disabled="row.rejectTag === '已撤销'" size="mini" type="danger" @click="Reject(row.reportId)">
               驳回
             </el-button>
-            <el-button v-if="isreject(row)" size="mini" type="danger" @click="UnReject(row.reportId)">
+            <el-button v-if="isreject(row)" size="mini" :disabled="row.rejectTag === '已撤销'" type="danger" @click="UnReject(row.reportId)">
               撤销
             </el-button>
-            <el-button icon="el-icon-upload" size="mini" type="primary" @click="upload(row)">
+            <el-button icon="el-icon-upload" size="mini" :disabled="row.rejectTag === '已撤销'" type="primary" @click="upload(row)">
               上传
             </el-button>
             <el-button
               v-if="row.rejectTag === '已上传'"
+              :disabled="row.rejectTag === '已撤销'"
               size="mini"
               type="warning"
               icon="el-icon-view"
