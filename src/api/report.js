@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getValuationReportList() {
   return request({
-    url: '/admin-agent/valuation-report',
+    url: '/admin-agent/report/type/infringement',
     method: 'get'
   })
 }
@@ -16,7 +16,7 @@ export function getReportPatents(reportId) {
 
 export function getInfringementReportList() {
   return request({
-    url: '/admin-agent/infringement-report',
+    url: '/admin-agent/report/type/infringement',
     method: 'get'
   })
 }
