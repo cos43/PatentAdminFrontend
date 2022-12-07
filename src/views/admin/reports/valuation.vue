@@ -72,13 +72,19 @@
           </template>
 
         </el-table-column>
-        <el-table-column align="center" label="申请时间" sortable="custom" width="230px">
+        <el-table-column align="center" label="申请时间" sortable="custom" width="180px">
           <template slot-scope="{row}">
             <span>{{ row.CreatedAt }}</span>
           </template>
         </el-table-column>
+        <el-table-column align="center" label="申请人" min-width="90px">
+          <template slot-scope="{row}">
+            <span class="link-type"> {{ row.CreateBy }} </span>
+          </template>
 
-        <el-table-column align="center" label="最后更新时间" sortable="custom" width="230px">
+        </el-table-column>
+
+        <el-table-column align="center" label="最后更新时间" sortable="custom" width="180px">
           <template slot-scope="{row}">
             <span>{{ row.UpdatedAt }}</span>
           </template>
@@ -200,7 +206,6 @@
         <el-table-column class-name="status-col" label="缩略图" width="300">
           <template slot-scope="{row}">
             <div v-if="ifupload" class="cards">
-
               <el-card
                 v-for="(file, index) in row.files"
                 :key="`file-${index}`"
@@ -212,12 +217,10 @@
                 <div class="card-actions">
                   <div style="display: flex;flex-direction: row;align-items: center;justify-content: center">
                     <el-button-group>
-
                       <el-button size="mini" type="primary" icon="el-icon-download">
                         <a @click="download(file.FilePath)">
                           下载
                         </a>
-
                       </el-button>
                     </el-button-group>
                   </div>
@@ -236,7 +239,6 @@
                   :close-on-click-modal="true"
                   :close-on-press-escape="true"
                 >
-
                   <div class="imageField">
                     <img :src="`http://localhost:8000${file.FilePath}`" alt="" class="image">
                   </div>
@@ -245,7 +247,6 @@
                   </span>
                 </el-dialog>
               </el-card>
-
             </div>
           </template>
         </el-table-column>
@@ -265,7 +266,7 @@
 
 </template>
 <script>
-// import { unClaimPatent } from '@/api/patent'
+
 import waves from '@/directive/waves' // waves directive
 import { getValuationReportList, getReportPatents, rejectReport, unRejectReport, getReportById, Upload, updateReport, deleteReport } from '@/api/report'
 

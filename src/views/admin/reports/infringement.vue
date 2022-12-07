@@ -58,7 +58,7 @@
         fit
         highlight-current-row
         style="width: 100%;
-      border-radius: 10px!important;  "
+      border-radius: 10px!important;"
       >
 
         <el-table-column align="center" label="ID" prop="id" sortable="custom" width="60">
@@ -72,13 +72,18 @@
           </template>
 
         </el-table-column>
-        <el-table-column align="center" label="申请时间" sortable="custom" width="230px">
+        <el-table-column align="center" label="申请时间" sortable="custom" width="180px">
           <template slot-scope="{row}">
             <span>{{ row.CreatedAt }}</span>
           </template>
         </el-table-column>
+        <el-table-column align="center" label="申请人" min-width="90px">
+          <template slot-scope="{row}">
+            <span class="link-type"> {{ row.CreateBy }} </span>
+          </template>
+        </el-table-column>
 
-        <el-table-column align="center" label="最后更新时间" sortable="custom" width="230px">
+        <el-table-column align="center" label="最后更新时间" sortable="custom" width="180px">
           <template slot-scope="{row}">
             <span>{{ row.UpdatedAt }}</span>
           </template>
@@ -294,6 +299,7 @@ export default {
       ifshow1: false,
       url: '',
       patentitems: null,
+
       patentlist: [],
       patentid: 0,
       time1: '0:0:0',
