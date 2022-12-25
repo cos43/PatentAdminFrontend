@@ -199,6 +199,20 @@ export const constantRoutes = [{
 },
 
 {
+  path: '/dept', component: Layout, meta: { title: '团队管理', icon: 'el-icon-s-help' }, children: [{
+    path: 'home',
+    component: () => import('@/views/users/dept/index'),
+    name: 'tradingInformation',
+    meta: { title: '团队信息', icon: 'el-icon-s-help' }
+  }, {
+    path: 'apply',
+    component: () => import('@/views/users/dept/userlist'),
+    name: 'apply',
+    meta: { title: '用户申请', icon: 'el-icon-user-solid' }
+  }]
+},
+
+{
   path: '/profile', component: Layout, children: [{
     path: 'index',
     component: () => import('@/views/users/profile/index'),
